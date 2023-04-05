@@ -59,7 +59,7 @@ func writeJobs(jobs []Wanted) {
 	checkErr(wErr)
 
 	for _, job := range jobs {
-		jobSlice := []string{"https://kr.indeed.com/viewjob?jk=" + job.id, job.title, job.location, job.summary}
+		jobSlice := []string{"https://www.wanted.co.kr/wd/" + job.id, job.title, job.location, job.summary}
 		jobErr := w.Write(jobSlice)
 		checkErr(jobErr)
 	}
@@ -97,7 +97,7 @@ func getCard(page int, baseURL string, c1 chan []Wanted) {
 
 func extractJob(s *goquery.Selection, c chan<- Wanted) {
 	//상세 데이터 추출
-	id, _ := s.Attr("data-jk")
+	id, _ := s.Attr("data-position-id")
 	title := CleanString(s.Find(".title>a").Text())
 	location := CleanString(s.Find(".accessible-contrast-color-location").Text())
 	summary := CleanString(s.Find(".summary").Text())
